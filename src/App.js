@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
-function App() {
+export const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <LoginContainer />
     </div>
   );
-}
+};
 
-export default App;
+export const LoginContainer = () => {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
+  const handleLoggedInChange = () => {
+    if (name.length > 0 && password.length > 0) {
+      setLoggedIn(true);
+    }
+    if (loggedIn) {
+      return (
+        <>
+          <DictionaryContainer />
+        </>
+      );
+    }
+  };
+  console.log(loggedIn);
+  return (
+    <div>
+      <h2>sing in</h2>
+      <input type="text" onChange={e => setName(e.target.value)} />
+      <input type="password" onChange={e => setPassword(e.target.value)} />
+      <button onClick={handleLoggedInChange}>Login</button>
+    </div>
+  );
+};
+const DictionaryContainer = () => {
+  return (
+    <div>
+      <p>You are signed in, welcome!</p>
+    </div>
+  );
+};

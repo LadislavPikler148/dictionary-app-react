@@ -5,27 +5,9 @@ export const DictionaryContainer = () => {
   const [inputValueWord, setInputValueWord] = useState("Hello");
   const [inputValueTranslate, setInputValueTranslate] = useState("Ahoj");
   const [selectValue, setSelectValue] = useState("EN");
-  const [data, setData] = useState([
-    {
-      [selectValue]: {
-        EN: inputValueWord,
-        SK: inputValueTranslate
-      }
-    }
-  ]);
-  const addDataToState = e => {
-    setData([
-      ...data,
-      {
-        [selectValue]: {
-          EN: inputValueWord,
-          SK: inputValueTranslate
-        }
-      }
-    ]);
-  };
+  const [data, setData] = useState(JSON.parse(localStorage.getItem("data")));
   return (
-    <React.Fragment>
+    <div className="dictionary-container">
       <label>
         Slovo:
         <input
@@ -49,8 +31,36 @@ export const DictionaryContainer = () => {
         <option>EN</option>
         <option>SK</option>
       </select>
-      <button onClick={addDataToState}>Add</button>
-      <CreateItemsContainer data={data} />
-    </React.Fragment>
+      <button
+        onClick={() => {
+          setData({
+            ...data,
+            [selectValue]: [
+              ...(data && data[selectValue] ? data[selectValue] : ""),
+              {
+                originalWord: inputValueWord,
+                translatedWord: inputValueTranslate
+              }
+            ]
+          });
+        }}
+      >
+        Add
+      </button>
+      <button
+        onClick={() => localStorage.setItem("data", JSON.stringify(data))}
+      >
+        Save
+      </button>
+      <button onClick={() => localStorage.clear()}>Remove dictionary</button>
+      <CreateItemsContainer
+        data={data}
+        onChangeProp={(language, index, value) => {
+          const mutatedData = data;
+          mutatedData[language][index].originalWord = value;
+          setData(mutatedData);
+        }}
+      />
+    </div>
   );
 };

@@ -6,7 +6,7 @@ import { LoginContainer } from "./components/LoginContainer";
 
 export const App = props => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  if (true) {
+  if (isLoggedIn) {
     return <DictionaryContainer />;
   }
   return <LoginContainer onClickProp={loggedIn => setIsLoggedIn(loggedIn)} />;

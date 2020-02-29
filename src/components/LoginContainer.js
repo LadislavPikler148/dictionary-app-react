@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
-export const LoginContainer = ({ onClickProp }) => {
-  const [name, setName] = useState("Mark");
-  const [password, setPassword] = useState("123");
+export const LoginContainer = ({ onClickProp, isLoggedIn }) => {
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [nameError, setNameError] = useState("");
 
   return (
     <div className="login-container">
@@ -14,6 +15,7 @@ export const LoginContainer = ({ onClickProp }) => {
           value={name}
           onChange={e => setName(e.target.value)}
         />
+        <p>{nameError}</p>
         <input
           type="password"
           value={password}
@@ -21,6 +23,11 @@ export const LoginContainer = ({ onClickProp }) => {
         />
         <button
           onClick={() => {
+            if (!name) {
+              setNameError("Hodnota neexistuje");
+            } else {
+              setNameError("");
+            }
             if (name === "Mark" && password === "123") {
               onClickProp(true);
             } else {

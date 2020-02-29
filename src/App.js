@@ -9,5 +9,10 @@ export const App = props => {
   if (isLoggedIn) {
     return <DictionaryContainer />;
   }
-  return <LoginContainer onClickProp={loggedIn => setIsLoggedIn(loggedIn)} />;
+  return (
+    <LoginContainer
+      onClickProp={loggedIn => setIsLoggedIn(loggedIn)}
+      isLoggedIn={isLoggedIn}
+    />
+  );
 };
